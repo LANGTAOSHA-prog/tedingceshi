@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>建設分野 特定技能2号 模擬試験 60問</title>
+<style>
+:root {
+  --bg:#07131f;
+  --card:#0f2235;
+  --card2:#132b42;
+  --line:#234762;
+  --text:#eaf2f8;
+  --muted:#91a9bb;
+  --gold:#d6a82f;
+  --gold2:#f0c95a;
+  --green:#1fa971;
+  --red:#d84b4b;
+  --blue:#3388d8;
+  --shadow:0 18px 50px rgba(0,0,0,.35);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:
+    radial-gradient(circle at top left, rgba(214,168,47,.13), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(51,136,216,.14), transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP","Noto Sans SC",Arial,sans-serif;
+  line-height:1.65;
+}
+.app {
+  width:min(100%, 980px);
+  margin:0 auto;
+  padding:18px;
+}
+.header {
+  background:linear-gradient(135deg, #10283d, #091827);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.title {
+  margin:0 0 6px;
+  font-size:clamp(21px, 4vw, 32px);
+  font-weight:900;
+  color:var(--gold2);
+  letter-spacing:.03em;
+}
+.sub {
+  color:var(--muted);
+  font-size:14px;
+  margin:0;
+}
+.progress-wrap {
+  margin-top:16px;
+  height:12px;
+  background:#07131f;
+  border:1px solid var(--line);
+  border-radius:99px;
+  overflow:hidden;
+}
+.progress {
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--green));
+  transition:.25s;
+}
+.info-row {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.badge {
+  border:1px solid var(--line);
+  background:#0b1b2a;
+  color:var(--text);
+  border-radius:99px;
+  padding:7px 11px;
+  font-size:13px;
+}
+.main {
+  margin-top:18px;
+}
+.card {
+  background:linear-gradient(180deg, var(--card), #0b1b2a);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+.part {
+  color:var(--gold2);
+  font-weight:800;
+  font-size:14px;
+  margin-bottom:8px;
+}
+.qno {
+  color:#bcd2e4;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.question {
+  font-size:clamp(18px, 3.5vw, 24px);
+  font-weight:900;
+  margin:8px 0 20px;
+}
+.options {
+  display:grid;
+  gap:12px;
+}
+.option {
+  width:100%;
+  text-align:left;
+  border:1px solid var(--line);
+  background:var(--card2);
+  color:var(--text);
+  border-radius:16px;
+  padding:15px 16px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.15s ease;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+}
+.option:hover {
+  transform:translateY(-1px);
+  border-color:var(--gold);
+}
+.option .mark {
+  flex:0 0 28px;
+  height:28px;
+  border-radius:50%;
+  background:#07131f;
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  color:var(--gold2);
+}
+.option.selected {
+  border-color:var(--gold2);
+  background:#263b26;
+}
+.option.correct {
+  border-color:var(--green);
+  background:rgba(31,169,113,.20);
+}
+.option.wrong {
+  border-color:var(--red);
+  background:rgba(216,75,75,.20);
+}
+.explain {
+  display:none;
+  margin-top:18px;
+  padding:16px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:#07131f;
+}
+.explain.show { display:block; }
+.explain b.correct-text { color:var(--green); }
+.explain b.wrong-text { color:var(--red); }
+.nav {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+button {
+  border:none;
+  border-radius:15px;
+  padding:14px 16px;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+}
+.btn {
+  background:#162f47;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+.btn-primary {
+  background:linear-gradient(135deg,var(--gold),#b77c13);
+  color:#121212;
+}
+.btn-danger {
+  background:linear-gradient(135deg,var(--red),#a93232);
+  color:white;
+}
+.grid-actions {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:12px;
+  margin-top:12px;
+}
+.result {
+  display:none;
+  margin-top:18px;
+}
+.result.show { display:block; }
+.score {
+  font-size:clamp(28px, 8vw, 54px);
+  font-weight:1000;
+  color:var(--gold2);
+  margin:6px 0;
+}
+.pass {
+  color:var(--green);
+  font-weight:900;
+  font-size:22px;
+}
+.fail {
+  color:var(--red);
+  font-weight:900;
+  font-size:22px;
+}
+.review {
+  margin-top:16px;
+  display:grid;
+  gap:10px;
+}
+.review-item {
+  border:1px solid var(--line);
+  background:#0b1b2a;
+  border-radius:14px;
+  padding:12px;
+  font-size:14px;
+}
+.footer-note {
+  color:var(--muted);
+  text-align:center;
+  font-size:13px;
+  margin:18px 0 6px;
+}
+@media (max-width:640px) {
+  .app { padding:10px; }
+  .header { border-radius:16px; padding:16px; }
+  .card { border-radius:16px; padding:16px; }
+  .nav { grid-template-columns:1fr; }
+  .grid-actions { grid-template-columns:1fr; }
+  .option { padding:14px; font-size:15px; }
+  .header { position:static; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1 class="title">建設分野 特定技能2号 模擬試験 60問</h1>
+    <p class="sub">第1部30問＋第2部高難度30問｜クリック選択・自動採点・スマホ/PC対応</p>
+    <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+    <div class="info-row">
+      <span class="badge" id="countBadge">0 / 60</span>
+      <span class="badge" id="answeredBadge">解答済み：0問</span>
+      <span class="badge">合格目安：85%以上</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="card" id="quizCard">
+      <div class="part" id="part"></div>
+      <div class="qno" id="qno"></div>
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+      <div class="explain" id="explain"></div>
+      <div class="nav">
+        <button class="btn" onclick="prevQuestion()">← 前の問題</button>
+        <button class="btn-primary" onclick="nextQuestion()">次の問題 →</button>
+      </div>
+      <div class="grid-actions">
+        <button class="btn" onclick="showAnswer()">答えを確認</button>
+        <button class="btn" onclick="finishExam()">採点する</button>
+        <button class="btn-danger" onclick="resetExam()">最初からやり直す</button>
+      </div>
+    </section>
+
+    <section class="card result" id="result">
+      <div class="part">試験結果</div>
+      <div class="score" id="scoreText"></div>
+      <div id="judgeText"></div>
+      <div class="review" id="review"></div>
+      <div class="grid-actions">
+        <button class="btn-primary" onclick="goQuestion(0)">第1問に戻る</button>
+        <button class="btn-danger" onclick="resetExam()">再挑戦する</button>
+      </div>
+    </section>
+  </main>
+  <div class="footer-note">保存してオフラインでも使用できます。画像問題を追加したい場合は image: "images/q1.jpg" をデータに入れてください。</div>
+</div>
+
+<script>
+const questions = [
+  {
+    "q": "建設現場で作業を始める前に行うKY活動の目的として、最も適切なものはどれか。",
+    "opts": [
+      "作業時間を短縮するため",
+      "作業員の人数を確認するためだけ",
+      "危険を予測し、災害を防止するため",
+      "工具の値段を確認するため"
+    ],
+    "ans": 2,
+    "exp": "KY活動は危険予知活動であり、作業前に危険を予測して災害を防止することが目的である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "フルハーネス型墜落制止用器具について、正しいものはどれか。",
+    "opts": [
+      "装着していれば、ランヤードを接続しなくても安全である",
+      "高所作業では、正しく装着し、確実に使用することが重要である",
+      "腰道具の代わりとして使用する",
+      "雨の日だけ使用すればよい"
+    ],
+    "ans": 1,
+    "exp": "フルハーネスは正しく装着し、ランヤード等を確実に接続して初めて墜落防止に有効である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "脚立を使用するときの行動として、誤っているものはどれか。",
+    "opts": [
+      "天板に立って作業する",
+      "開き止めを確実に掛ける",
+      "平らで安定した場所に設置する",
+      "無理な姿勢で作業しない"
+    ],
+    "ans": 0,
+    "exp": "脚立の天板に立つことは危険であり、転落災害につながる。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "足場の作業床について、正しい説明はどれか。",
+    "opts": [
+      "作業床にすき間があっても問題ない",
+      "手すりや中さんは不要である",
+      "作業床は安全に歩行・作業できる幅と強度が必要である",
+      "材料を多く置くほど安全である"
+    ],
+    "ans": 2,
+    "exp": "足場の作業床には、安全に歩行・作業できる幅、強度、墜落防止措置が必要である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "転倒災害を防ぐため、通路でしてはいけないことはどれか。",
+    "opts": [
+      "整理整頓を行う",
+      "段差に注意表示をする",
+      "資材や工具を放置する",
+      "滑りやすい場所を清掃する"
+    ],
+    "ans": 2,
+    "exp": "通路に資材や工具を放置すると、つまずきや転倒災害の原因となる。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "感電災害を防止するための対応として、適切でないものはどれか。",
+    "opts": [
+      "濡れた手で電動工具を扱う",
+      "漏電遮断器を使用する",
+      "電線の損傷を点検する",
+      "絶縁状態を確認する"
+    ],
+    "ans": 0,
+    "exp": "濡れた手で電動工具を扱うことは感電の危険が高く、適切ではない。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "酸素欠乏危険場所で作業する場合、最初に行うべきことはどれか。",
+    "opts": [
+      "すぐに入って作業する",
+      "酸素濃度を測定する",
+      "照明だけを確認する",
+      "作業後に換気する"
+    ],
+    "ans": 1,
+    "exp": "酸素欠乏危険場所では、作業前に酸素濃度を測定し、必要に応じて換気等を行う。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "熱中症対策として、適切でないものはどれか。",
+    "opts": [
+      "こまめに水分・塩分を補給する",
+      "休憩を取る",
+      "体調不良を我慢して作業を続ける",
+      "作業員の体調を確認する"
+    ],
+    "ans": 2,
+    "exp": "体調不良を我慢して作業を続けると重症化する危険があるため、直ちに報告・休憩する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "玉掛け作業で重要なこととして、正しいものはどれか。",
+    "opts": [
+      "荷の重さを確認せずに吊る",
+      "合図者を決めずに作業する",
+      "吊り荷の下に入らない",
+      "ワイヤロープの損傷は気にしない"
+    ],
+    "ans": 2,
+    "exp": "吊り荷の下に入ることは重大災害につながるため、絶対に避ける。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "クレーン作業中、合図が不明確な場合の対応として正しいものはどれか。",
+    "opts": [
+      "作業を続ける",
+      "一度停止し、合図を確認する",
+      "運転者の判断だけで動かす",
+      "周囲の作業員に任せる"
+    ],
+    "ans": 1,
+    "exp": "合図が不明確な場合は作業を停止し、合図内容を確認してから再開する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "コンクリート打設時に注意すべきこととして、正しいものはどれか。",
+    "opts": [
+      "型枠や支保工の状態を確認する",
+      "打設速度は速ければ速いほどよい",
+      "締固めは不要である",
+      "打設中に型枠の変形を確認しない"
+    ],
+    "ans": 0,
+    "exp": "打設前後には型枠、支保工、配筋、変形、漏れ等を確認する必要がある。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "コンクリートの締固めに使用するものとして、適切なものはどれか。",
+    "opts": [
+      "バイブレータ",
+      "のこぎり",
+      "墨つぼ",
+      "スパナ"
+    ],
+    "ans": 0,
+    "exp": "コンクリートの締固めにはバイブレータを使用し、ジャンカ等の不具合を防止する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "型枠工事において、支保工の役割として正しいものはどれか。",
+    "opts": [
+      "コンクリートを着色する",
+      "型枠を支え、荷重を受ける",
+      "鉄筋を切断する",
+      "仕上げ面を塗装する"
+    ],
+    "ans": 1,
+    "exp": "支保工は型枠を支え、コンクリートや作業荷重を受ける重要な仮設構造である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "鉄筋工事で、かぶり厚さを確保する目的として正しいものはどれか。",
+    "opts": [
+      "鉄筋を見えやすくするため",
+      "コンクリート量を減らすため",
+      "鉄筋の腐食防止や耐火性を確保するため",
+      "作業時間を短縮するため"
+    ],
+    "ans": 2,
+    "exp": "かぶり厚さは鉄筋を腐食から守り、耐久性や耐火性を確保するために必要である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "鉄筋の結束作業について、正しいものはどれか。",
+    "opts": [
+      "配筋図を確認せずに作業する",
+      "鉄筋の間隔や位置を確認して結束する",
+      "結束線は不要である",
+      "かぶり厚さは関係ない"
+    ],
+    "ans": 1,
+    "exp": "鉄筋工事では配筋図に従い、間隔、位置、かぶり厚さを確認して結束する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "内装工事で、石こうボードを取り付ける際に注意することはどれか。",
+    "opts": [
+      "下地の位置を確認する",
+      "ビスの間隔は自由でよい",
+      "割れていてもそのまま使う",
+      "寸法確認は不要である"
+    ],
+    "ans": 0,
+    "exp": "石こうボードは下地位置を確認し、適切なビス間隔・深さで固定する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "防水工事で最も重要な目的はどれか。",
+    "opts": [
+      "建物内部への水の侵入を防ぐ",
+      "建物を重くする",
+      "鉄筋を切断する",
+      "足場を解体する"
+    ],
+    "ans": 0,
+    "exp": "防水工事の目的は、雨水や地下水などが建物内部に侵入することを防ぐことである。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "塗装作業で、下地処理を行う理由として正しいものはどれか。",
+    "opts": [
+      "塗料の密着性を高めるため",
+      "作業員を減らすため",
+      "塗料を薄めるためだけ",
+      "足場を不要にするため"
+    ],
+    "ans": 0,
+    "exp": "下地処理により塗料の密着性が高まり、剥がれや不具合を防止できる。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "建設現場で「5S」に含まれないものはどれか。",
+    "opts": [
+      "整理",
+      "整頓",
+      "清掃",
+      "速度"
+    ],
+    "ans": 3,
+    "exp": "5Sは整理、整頓、清掃、清潔、しつけであり、速度は含まれない。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "職長の役割として、最も適切なものはどれか。",
+    "opts": [
+      "作業員に安全な作業方法を指導する",
+      "作業員の休憩をすべて禁止する",
+      "危険箇所を放置する",
+      "作業手順を確認しない"
+    ],
+    "ans": 0,
+    "exp": "職長は作業員に安全な作業方法を指導し、現場の安全・品質・工程を管理する役割がある。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "作業手順書について、正しい説明はどれか。",
+    "opts": [
+      "作業の安全な進め方を示すものである",
+      "使用しなくても問題ない",
+      "事故が起きた後だけ作成する",
+      "作業員に見せてはいけない"
+    ],
+    "ans": 0,
+    "exp": "作業手順書は、安全で効率的に作業を進めるための手順や注意点を示すものである。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "ヒヤリハット報告の目的として、正しいものはどれか。",
+    "opts": [
+      "作業員を責めるため",
+      "事故につながる危険を共有し、再発を防ぐため",
+      "書類を増やすためだけ",
+      "現場を早く終わらせるため"
+    ],
+    "ans": 1,
+    "exp": "ヒヤリハットは事故に至らなかった危険事例を共有し、災害防止につなげる活動である。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "重機の近くで作業する場合、正しい行動はどれか。",
+    "opts": [
+      "運転者の死角に入らない",
+      "重機の後ろを自由に通る",
+      "合図なしで近づく",
+      "警報音を無視する"
+    ],
+    "ans": 0,
+    "exp": "重機には死角があるため、作業員は死角や旋回範囲に入らないようにする。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "掘削作業で土砂崩壊を防ぐために必要な措置はどれか。",
+    "opts": [
+      "土止め支保工などを設ける",
+      "掘ったまま放置する",
+      "雨の日でも確認しない",
+      "作業員を多く入れるだけでよい"
+    ],
+    "ans": 0,
+    "exp": "掘削では地山の状態を確認し、必要に応じて土止め支保工等を設ける。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "高所作業で工具を使用する場合、注意すべきことはどれか。",
+    "opts": [
+      "工具の落下防止措置を行う",
+      "工具を足場の端に置く",
+      "下に人がいても作業を続ける",
+      "工具を投げ渡す"
+    ],
+    "ans": 0,
+    "exp": "高所作業では工具の落下防止措置を行い、下方の作業員への飛来落下災害を防ぐ。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "建築基準法における確認申請の目的として、正しいものはどれか。",
+    "opts": [
+      "建築計画が法令に適合しているか確認するため",
+      "工事費を決めるためだけ",
+      "作業員の給料を決めるため",
+      "材料の色を決めるため"
+    ],
+    "ans": 0,
+    "exp": "確認申請は、建築計画が建築基準法等の法令に適合しているか確認を受ける手続きである。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "労働安全衛生法の目的として、最も適切なものはどれか。",
+    "opts": [
+      "労働者の安全と健康を確保すること",
+      "建物のデザインを決めること",
+      "工事価格を安くすること",
+      "会社名を決めること"
+    ],
+    "ans": 0,
+    "exp": "労働安全衛生法は、労働者の安全と健康を確保し、快適な職場環境形成を促進することを目的とする。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "作業主任者について、正しい説明はどれか。",
+    "opts": [
+      "一定の危険作業で選任され、作業を直接指揮する者",
+      "誰でも自由に名乗れる者",
+      "現場に来なくてもよい者",
+      "書類整理だけを行う者"
+    ],
+    "ans": 0,
+    "exp": "作業主任者は一定の危険作業で選任され、作業方法の決定や直接指揮、安全措置の確認を行う。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "現場で異常を発見した場合の対応として、正しいものはどれか。",
+    "opts": [
+      "自分の判断で放置する",
+      "すぐに関係者へ報告し、必要に応じて作業を止める",
+      "作業後に思い出したら伝える",
+      "他人の責任にする"
+    ],
+    "ans": 1,
+    "exp": "異常や危険を発見した場合は、直ちに報告し、必要に応じて作業を停止する。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "特定技能2号の建設分野で求められる能力として、最も適切なものはどれか。",
+    "opts": [
+      "指示された単純作業だけを行う能力",
+      "熟練した技能と、現場で一定の管理・指導ができる能力",
+      "日本語をまったく使わない能力",
+      "作業手順を無視して早く作業する能力"
+    ],
+    "ans": 1,
+    "exp": "特定技能2号では熟練技能に加え、現場での一定の管理・指導能力が求められる。",
+    "part": "第1部・基礎問題"
+  },
+  {
+    "q": "高所作業におけるフルハーネス型墜落制止用器具の使用について、最も不適切なものはどれか。",
+    "opts": [
+      "使用前にランヤード、フック、バックル等の損傷を確認する",
+      "フックは可能な限り腰より高い位置に掛ける",
+      "装着していれば、親綱や安全ブロックに接続しなくても墜落を防止できる",
+      "墜落時の落下距離を考慮して使用する"
+    ],
+    "ans": 2,
+    "exp": "装着しているだけでは不十分であり、親綱や安全ブロック等へ確実に接続する必要がある。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "脚立作業に関する記述として、正しいものはどれか。",
+    "opts": [
+      "短時間作業であれば天板に立ってもよい",
+      "開き止めを掛け、安定した場所に設置して使用する",
+      "横方向に無理に身体を乗り出しても、片手で支えればよい",
+      "脚立の上で二人同時に作業すると安定する"
+    ],
+    "ans": 1,
+    "exp": "脚立は開き止めを確実に掛け、平らで安定した場所に設置して使用する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "足場の点検が必要な場合として、誤っているものはどれか。",
+    "opts": [
+      "足場を組み立てた後",
+      "強風、大雨、大雪等の悪天候の後",
+      "足場の一部を変更した後",
+      "作業員が慣れている現場では点検不要"
+    ],
+    "ans": 3,
+    "exp": "経験の有無に関係なく、組立後、変更後、悪天候後などには点検が必要である。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "墜落災害防止に関する職長の対応として、最も適切なものはどれか。",
+    "opts": [
+      "作業員の経験を信頼し、安全帯の使用確認は省略する",
+      "作業開始前に作業床、手すり、親綱、墜落制止用器具の使用状況を確認する",
+      "高所作業は急いで終わらせることを最優先する",
+      "手すりがない場所でも注意して歩けば作業させてよい"
+    ],
+    "ans": 1,
+    "exp": "職長は作業開始前に墜落防止設備や保護具の使用状況を確認し、危険を排除する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "コンクリート打設時の管理として、誤っているものはどれか。",
+    "opts": [
+      "打設前に型枠、支保工、配筋の状態を確認する",
+      "打設中は型枠の変形や漏れに注意する",
+      "一か所に集中して急速に打ち込むほど品質が安定する",
+      "適切に締固めを行い、ジャンカの発生を防ぐ"
+    ],
+    "ans": 2,
+    "exp": "一か所への集中打設や急速な打込みは型枠の変形、漏れ、品質不良につながる。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "鉄筋工事における「かぶり厚さ」に関する説明として、最も適切なものはどれか。",
+    "opts": [
+      "鉄筋を外から見えやすくするための寸法である",
+      "鉄筋と型枠内面との距離であり、耐久性や耐火性に関係する",
+      "コンクリートを少なくするために小さくするほどよい",
+      "配筋後に確認する必要はない"
+    ],
+    "ans": 1,
+    "exp": "かぶり厚さは鉄筋とコンクリート表面との距離であり、腐食防止、耐火性、耐久性に関係する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "型枠支保工の解体時期について、正しい考え方はどれか。",
+    "opts": [
+      "打設が終わればすぐに解体してよい",
+      "コンクリートが必要な強度に達したことを確認してから解体する",
+      "作業場所が狭ければ早めに解体してよい",
+      "表面が乾いていれば内部強度も十分である"
+    ],
+    "ans": 1,
+    "exp": "支保工はコンクリートが必要な強度に達したことを確認してから解体する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "玉掛け作業で、吊り荷が不安定に揺れ始めた場合の対応として、最も適切なものはどれか。",
+    "opts": [
+      "手で押さえて止める",
+      "吊り荷の下に入り、位置を調整する",
+      "いったん作業を停止し、安全を確認してから再開する",
+      "急いで巻き上げて作業を続ける"
+    ],
+    "ans": 2,
+    "exp": "吊り荷が不安定な場合は作業を停止し、安全確認を行ってから再開する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "クレーン作業における合図について、誤っているものはどれか。",
+    "opts": [
+      "合図者を定め、運転者に明確な合図を行う",
+      "合図が不明な場合は運転を停止する",
+      "複数人が同時に別々の合図を出すと安全性が高まる",
+      "合図方法は作業前に関係者で確認する"
+    ],
+    "ans": 2,
+    "exp": "合図者と合図方法を統一し、複数人が別々の合図を出すことは避ける。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "掘削作業に関する記述として、最も不適切なものはどれか。",
+    "opts": [
+      "地山の状態や湧水の有無を確認する",
+      "必要に応じて土止め支保工を設ける",
+      "掘削溝の端部に資材を多く置くと崩壊防止になる",
+      "雨天後は崩壊の危険が高まるため点検する"
+    ],
+    "ans": 2,
+    "exp": "掘削溝の端部に資材を置くと荷重が増し、土砂崩壊の危険が高まる。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "酸素欠乏危険作業に関する対応として、正しいものはどれか。",
+    "opts": [
+      "臭いがなければ酸素濃度測定は不要である",
+      "作業前に酸素濃度等を測定し、必要に応じて換気する",
+      "短時間なら一人で入ってもよい",
+      "異常を感じた作業員を助けるため、すぐに無装備で入る"
+    ],
+    "ans": 1,
+    "exp": "酸素欠乏は臭いでは判断できないため、作業前に測定し、換気等の措置を行う。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "感電災害防止について、誤っているものはどれか。",
+    "opts": [
+      "漏電遮断器を使用する",
+      "電動工具やコードの損傷を点検する",
+      "雨天や湿潤場所では特に注意する",
+      "ブレーカーが落ちる場合は、何度も入れ直して作業を続ける"
+    ],
+    "ans": 3,
+    "exp": "ブレーカーが落ちる場合は異常の可能性があり、原因を確認せず作業を続けてはいけない。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "熱中症対策として、職長の対応で最も適切なものはどれか。",
+    "opts": [
+      "体調不良者がいても本人が大丈夫と言えば作業を続けさせる",
+      "水分・塩分補給、休憩、作業員の体調確認を行う",
+      "暑い日は作業速度を上げて早く終わらせる",
+      "若い作業員は熱中症になりにくいため確認不要"
+    ],
+    "ans": 1,
+    "exp": "職長は水分・塩分補給、休憩、作業員の体調確認を行い、熱中症を予防する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "作業手順書について、最も適切な説明はどれか。",
+    "opts": [
+      "作業員の経験が十分なら不要である",
+      "安全で効率的に作業を進めるため、作業方法や注意点を明確にしたもの",
+      "元請会社だけが保管し、作業員には見せないもの",
+      "事故が発生した後に初めて作成するもの"
+    ],
+    "ans": 1,
+    "exp": "作業手順書は作業方法、順序、危険ポイント、注意事項を明確にするためのものである。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "ヒヤリハット活動の目的として、最も適切なものはどれか。",
+    "opts": [
+      "作業員の失敗を記録して処分するため",
+      "事故には至らなかった危険事例を共有し、災害防止に役立てるため",
+      "現場の書類を増やすため",
+      "作業を遅らせるため"
+    ],
+    "ans": 1,
+    "exp": "ヒヤリハット活動は危険事例を共有し、再発防止と災害防止に役立てるために行う。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "職長が新規入場者に対して行うべき対応として、不適切なものはどれか。",
+    "opts": [
+      "現場の危険箇所を説明する",
+      "作業ルールや避難経路を説明する",
+      "経験者であれば教育を省略する",
+      "使用する保護具を確認する"
+    ],
+    "ans": 2,
+    "exp": "経験者であっても、新しい現場では危険箇所やルールが異なるため教育を省略してはいけない。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "内装工事で石こうボードを施工する際の注意点として、誤っているものはどれか。",
+    "opts": [
+      "下地の位置を確認して固定する",
+      "破損したボードは状態を確認し、必要に応じて交換する",
+      "ビスの間隔や打ち込み深さを確認する",
+      "目地の位置や割付は仕上げに影響しないため考慮しない"
+    ],
+    "ans": 3,
+    "exp": "目地の位置や割付は仕上がり、品質、ひび割れ防止に関係するため考慮が必要である。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "防水工事の施工管理として、最も不適切なものはどれか。",
+    "opts": [
+      "下地の乾燥状態や清掃状態を確認する",
+      "立上り部や端部の納まりを確認する",
+      "雨天時でも下地が濡れたまま施工する",
+      "施工後にふくれ、破れ、浮き等を確認する"
+    ],
+    "ans": 2,
+    "exp": "濡れた下地への防水施工は密着不良、ふくれ、漏水の原因となる。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "塗装工事において、下塗りの主な目的として正しいものはどれか。",
+    "opts": [
+      "仕上げ色を濃くするためだけ",
+      "下地と上塗り材の密着性を高めるため",
+      "塗装回数を減らすため",
+      "養生を不要にするため"
+    ],
+    "ans": 1,
+    "exp": "下塗りは下地と上塗り材の密着性を高め、仕上がりと耐久性を確保するために行う。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "建設現場における5S活動について、誤っているものはどれか。",
+    "opts": [
+      "整理とは、必要なものと不要なものを分けることである",
+      "整頓とは、必要なものを使いやすく置くことである",
+      "清掃とは、汚れを取り除き、異常を発見しやすくすることである",
+      "速度とは、作業を急がせることで5Sの一つである"
+    ],
+    "ans": 3,
+    "exp": "5Sは整理、整頓、清掃、清潔、しつけであり、速度は含まれない。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "建築基準法における確認申請の説明として、最も適切なものはどれか。",
+    "opts": [
+      "建築計画が法令に適合しているか、工事着手前に確認を受ける手続き",
+      "完成後に外観だけを確認する手続き",
+      "作業員の資格を確認する手続き",
+      "建築材料の価格を決める手続き"
+    ],
+    "ans": 0,
+    "exp": "確認申請は建築計画が法令に適合しているか、工事着手前に確認を受ける手続きである。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "作業主任者の職務として、正しいものはどれか。",
+    "opts": [
+      "危険作業を直接指揮し、安全措置を確認する",
+      "作業員の給与を決定する",
+      "現場に来なくても書類上だけ選任されればよい",
+      "作業方法は作業員に任せ、指揮しない"
+    ],
+    "ans": 0,
+    "exp": "作業主任者は危険作業を直接指揮し、安全措置や作業方法を確認する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "鉄骨建方作業に関する安全管理として、最も適切なものはどれか。",
+    "opts": [
+      "部材が仮固定されていなくても次の作業に進む",
+      "吊り荷の下で位置合わせを行う",
+      "建方中は墜落、飛来落下、倒壊の危険を考慮して作業計画を確認する",
+      "強風時でも予定を優先して作業を続ける"
+    ],
+    "ans": 2,
+    "exp": "鉄骨建方では墜落、飛来落下、倒壊等の危険を考慮し、作業計画と安全措置を確認する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "重機作業における接触災害防止として、誤っているものはどれか。",
+    "opts": [
+      "作業範囲内への立入禁止措置を行う",
+      "誘導者を配置する場合は、合図方法を確認する",
+      "運転者の死角に入らないよう周知する",
+      "作業員が急げば、重機の旋回範囲を横切ってもよい"
+    ],
+    "ans": 3,
+    "exp": "重機の旋回範囲や死角に入ることは接触災害につながるため、急いでいても横切ってはいけない。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "品質管理における「不具合を発見した場合」の対応として、最も適切なものはどれか。",
+    "opts": [
+      "工期を優先して隠しておく",
+      "関係者へ報告し、原因と是正方法を確認する",
+      "自分の担当でなければ放置する",
+      "完成後にまとめて考える"
+    ],
+    "ans": 1,
+    "exp": "不具合を発見した場合は速やかに報告し、原因と是正方法を確認して対応する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "工程管理に関する職長の判断として、最も不適切なものはどれか。",
+    "opts": [
+      "作業の順序、人員、資材搬入時期を確認する",
+      "他職種との取り合いを確認する",
+      "安全よりも工程を最優先し、危険作業でも続行する",
+      "遅れが出る場合は関係者と調整する"
+    ],
+    "ans": 2,
+    "exp": "工程は重要だが、安全を犠牲にして危険作業を続行してはいけない。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "リスクアセスメントの説明として、最も適切なものはどれか。",
+    "opts": [
+      "危険性や有害性を見つけ、リスクを評価し、低減措置を検討すること",
+      "事故後に責任者を決めること",
+      "作業員の人数を数えること",
+      "作業終了後に道具を片付けること"
+    ],
+    "ans": 0,
+    "exp": "リスクアセスメントは危険性・有害性を特定し、リスクを見積もり、低減措置を検討する活動である。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "緊急時の対応として、不適切なものはどれか。",
+    "opts": [
+      "事前に避難経路や連絡方法を確認しておく",
+      "災害発生時は二次災害防止を考慮する",
+      "負傷者がいる場合は必要に応じて救急連絡を行う",
+      "現場の評判を守るため、事故を報告しない"
+    ],
+    "ans": 3,
+    "exp": "事故や災害は必ず報告し、二次災害防止と救急対応を優先する。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "安全衛生保護具の使用について、正しいものはどれか。",
+    "opts": [
+      "保護帽は現場に持っていれば着用しなくてもよい",
+      "保護具は作業内容や危険性に応じて正しく使用する",
+      "暑い日は保護具を外して作業してよい",
+      "一度購入した保護具は点検不要である"
+    ],
+    "ans": 1,
+    "exp": "保護具は作業内容や危険性に応じて正しく使用し、使用前点検も必要である。",
+    "part": "第2部・高難度問題"
+  },
+  {
+    "q": "特定技能2号レベルの技能者に求められる姿勢として、最も適切なものはどれか。",
+    "opts": [
+      "自分の作業だけを行い、周囲の危険には関わらない",
+      "作業品質、安全、工程を理解し、必要に応じて後輩や作業員を指導する",
+      "指示がなくても安全手順を省略して効率を上げる",
+      "書類や手順書は管理者だけが理解すればよい"
+    ],
+    "ans": 1,
+    "exp": "特定技能2号レベルでは、熟練技能だけでなく、安全・品質・工程を理解し、指導できる力が求められる。",
+    "part": "第2部・高難度問題"
+  }
+];
+let current = 0;
+let answers = Array(questions.length).fill(null);
+
+function $(id) { return document.getElementById(id); }
+
+function renderQuestion() {
+  const q = questions[current];
+  $("part").textContent = q.part;
+  $("qno").textContent = `第${current + 1}問 / ${questions.length}問`;
+  $("question").textContent = q.q;
+
+  const options = $("options");
+  options.innerHTML = "";
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    if (answers[current] === i) btn.classList.add("selected");
+    btn.innerHTML = `<span class="mark">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    options.appendChild(btn);
+  });
+
+  $("explain").className = "explain";
+  $("explain").innerHTML = "";
+  updateHeader();
+  $("result").classList.remove("show");
+}
+
+function selectAnswer(i) {
+  answers[current] = i;
+  showAnswer();
+  updateHeader();
+  setTimeout(() => {
+    if (current < questions.length - 1) {
+      current++;
+      renderQuestion();
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  }, 450);
+}
+
+function showAnswer() {
+  const q = questions[current];
+  const buttons = document.querySelectorAll(".option");
+  buttons.forEach((btn, i) => {
+    btn.classList.remove("selected","correct","wrong");
+    if (i === q.ans) btn.classList.add("correct");
+    if (answers[current] === i && i !== q.ans) btn.classList.add("wrong");
+  });
+  const selected = answers[current];
+  const correctLetter = String.fromCharCode(65 + q.ans);
+  let selectedText = selected === null ? "未解答" : String.fromCharCode(65 + selected);
+  $("explain").className = "explain show";
+  $("explain").innerHTML = `
+    <div><b class="correct-text">正解：${correctLetter}. ${q.opts[q.ans]}</b></div>
+    <div>あなたの解答：${selectedText}</div>
+    <div style="margin-top:8px;">解説：${q.exp}</div>
+  `;
+}
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+    window.scrollTo({top:0, behavior:"smooth"});
+  } else {
+    finishExam();
+  }
+}
+
+function prevQuestion() {
+  if (current > 0) {
+    current--;
+    renderQuestion();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+}
+
+function goQuestion(n) {
+  current = n;
+  renderQuestion();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function updateHeader() {
+  const answered = answers.filter(a => a !== null).length;
+  $("countBadge").textContent = `${current + 1} / ${questions.length}`;
+  $("answeredBadge").textContent = `解答済み：${answered}問`;
+  $("progress").style.width = `${Math.round(((current+1)/questions.length)*100)}%`;
+}
+
+function finishExam() {
+  let correct = 0;
+  questions.forEach((q, i) => {
+    if (answers[i] === q.ans) correct++;
+  });
+  const percent = Math.round(correct / questions.length * 100);
+  $("result").classList.add("show");
+  $("scoreText").textContent = `${correct} / ${questions.length}問　${percent}%`;
+  $("judgeText").innerHTML = percent >= 85
+    ? `<div class="pass">合格レベルです。</div>`
+    : `<div class="fail">不合格レベルです。85%以上を目指してください。</div>`;
+
+  const review = $("review");
+  review.innerHTML = "";
+  questions.forEach((q, i) => {
+    const user = answers[i];
+    if (user !== q.ans) {
+      const div = document.createElement("div");
+      div.className = "review-item";
+      div.innerHTML = `
+        <b>第${i+1}問：</b>${q.q}<br>
+        あなたの解答：${user === null ? "未解答" : String.fromCharCode(65+user) + ". " + q.opts[user]}<br>
+        正解：${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}<br>
+        解説：${q.exp}
+      `;
+      review.appendChild(div);
+    }
+  });
+  if (review.innerHTML === "") {
+    review.innerHTML = `<div class="review-item">全問正解です。すばらしいです。</div>`;
+  }
+  window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"});
+}
+
+function resetExam() {
+  if (!confirm("解答をすべてリセットしますか？")) return;
+  answers = Array(questions.length).fill(null);
+  current = 0;
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
