@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>JAC建築分野特定技能2号：施工体制・チームワーク模擬試験</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none; /* 見た目重視、テキスト選択は自由にしたいがボタン操作に影響なし */
+        }
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', 'Meiryo', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .cbt-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 20px 25px 35px 25px;
+            transition: all 0.2s;
+        }
+        h1 {
+            font-size: 1.7rem;
+            font-weight: bold;
+            border-left: 7px solid #2c7da0;
+            padding-left: 18px;
+            color: #1e3e53;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #2c7da0;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #cbd5e0;
+            padding-bottom: 12px;
+        }
+        .question-panel {
+            background: #fefefe;
+            border-radius: 28px;
+            padding: 20px 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2edf2;
+        }
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            color: #0a2b38;
+            background: #eef3fc;
+            padding: 15px 18px;
+            border-radius: 24px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .opt-btn {
+            background: #f9fafc;
+            border: 2px solid #cfdfe9;
+            border-radius: 60px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: inherit;
+            color: #1f3b45;
+        }
+        .opt-btn:hover {
+            background: #eef2f9;
+            border-color: #8bb9ce;
+            transform: scale(0.99);
+        }
+        .opt-prefix {
+            font-weight: bold;
+            font-size: 1.2rem;
+            width: 32px;
+            display: inline-block;
+            color: #2c7da0;
+        }
+        .selected-option {
+            background: #d9eefb;
+            border-color: #2c7da0;
+            box-shadow: 0 2px 6px rgba(44,125,160,0.2);
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 12px 18px;
+            border-radius: 28px;
+            font-size: 0.9rem;
+            background: #f1f5f9;
+            border-left: 6px solid #94a3b8;
+        }
+        .nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        button {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        button.secondary {
+            background: #5f6c7a;
+        }
+        button.primary {
+            background: #1f6392;
+        }
+        button:disabled {
+            background: #b5c7d2;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .score-area {
+            background: #dff0f5;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        .toggle-result {
+            margin-top: 20px;
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 10px 15px;
+        }
+        hr {
+            margin: 20px 0;
+            border-color: #e0ecf2;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .mistake-item {
+            font-size: 0.85rem;
+            border-bottom: 1px solid #dce5ea;
+            padding: 12px 5px;
+        }
+        .mistake-letter {
+            font-weight: bold;
+            background: #ffe0db;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        .correct-ans {
+            color: #227722;
+            font-weight: bold;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 25px;
+            color: #6c8b9b;
+        }
+        @media (max-width: 550px) {
+            .cbt-container { padding: 15px; }
+            .question-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="cbt-container" id="cbtApp">
+    <h1>🔨 分野1：施工体制・チームワーク</h1>
+    <div class="sub">JAC 建築分野 特定技能2号  CBT模擬試験（Ver. Trial）</div>
+
+    <!-- 問題表示エリア -->
+    <div class="question-panel">
+        <div class="question-text" id="questionText">問題を読み込み中...</div>
+        <div class="options" id="optionsContainer">
+            <!-- 動的選択肢 -->
+        </div>
+        <div class="feedback" id="feedbackArea">
+            💡 選択肢をクリックして回答してください。各問題1点です。
+        </div>
+    </div>
+
+    <div class="nav-area">
+        <button id="prevBtn" class="secondary">◀ 前の問題</button>
+        <span id="qCounter" style="font-weight:bold; background:#eef2f5; padding:5px 14px; border-radius:30px;">1 / 0</span>
+        <button id="nextBtn" class="secondary">次の問題 ▶</button>
+        <button id="submitBtn" class="primary">📋 採点＆結果表示</button>
+    </div>
+
+    <!-- 自動採点結果表示＋合格発表 -->
+    <div id="scorePanel" class="score-area" style="display: none;">
+        <!-- 動的にスコア表示 -->
+    </div>
+
+    <!-- 間違い一覧（txtダウンロード＋表示領域） -->
+    <div class="toggle-result" id="mistakeAreaWrapper" style="display: none;">
+        <hr>
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <strong style="font-size:1rem;">📘 誤答履歴（正答・解説付き）</strong>
+            <button id="downloadTxtBtn" style="background:#3c6e71; padding:6px 14px;">⬇️ テキスト保存 (.txt)</button>
+        </div>
+        <div id="mistakeList" style="max-height: 280px; overflow-y: auto; margin-top: 12px;">
+            <!-- 間違い詳細 -->
+        </div>
+        <p style="font-size:0.7rem; margin-top:10px;">※間違いがあった場合のみ記録。正解問題はリストに含まれません。</p>
+    </div>
+    <footer>⛑️ 施工体制・チームワーク（安全衛生、役割共有、工程調整など）| 合格基準: 正答率85%以上</footer>
+</div>
+
+<script>
+    // ---------- 問題データ (第1分野: 施工体制・チームワーク 日本語版) ----------
+    const QUESTIONS = [
+        {
+            text: "現場の施工体制において、「安全衛生管理体制」を適切に機能させるために最も重要な基本的考え方はどれか。",
+            options: [
+                "A. 作業効率を最優先し、安全パトロールは月1回でよい",
+                "B. 安全管理者、作業主任者など役割を明確にし、作業員への周知・教育を徹底する",
+                "C. 危険源は現場監督だけが把握すればよく、作業員の意見は不要である",
+                "D. 事故発生時のみ安全協議会を開催すれば問題ない"
+            ],
+            correct: "B",
+            explanation: "施工体制における安全衛生管理では役割分担と教育・情報共有が不可欠です。管理者と作業者が協働し意識を高めることが最も重要です。"
+        },
+        {
+            text: "複数の専門工事業者が協働する現場で「チームワーク」を高めるために、現場監督が優先すべき行動は次のうちどれか。",
+            options: [
+                "A. 各業者の作業範囲を紙だけで渡し、進捗は各自任せる",
+                "B. 定期的な連絡調整会議を開き、工程の共有と問題点を話し合う",
+                "C. 自社の作業を優先させ、他業者の都合は考慮しない",
+                "D. 指示系統を複雑にし、全ての報告を書面のみで行う"
+            ],
+            correct: "B",
+            explanation: "チームワーク醸成の基本は情報共有とコミュニケーション。定例会議による工程調整や問題解決が効果的です。"
+        },
+        {
+            text: "「施工計画」に基づいた作業手順を円滑に進めるチーム体制として、不適切な記述はどれか。",
+            options: [
+                "A. 現場の工程管理表を全員が確認できる場所に掲示する",
+                "B. クレーン作業など、合図や身振りによる意思統一ルールを明確にする",
+                "C. 各職長は自身の施工エリアだけ把握すればよく、他エリアの作業は関知しない",
+                "D. 朝礼やミーティングで当日の危険予知活動(KY)を実施する"
+            ],
+            correct: "C",
+            explanation: "施工体制では全体の連携が重要。他エリアとの調整もチームワークに含まれるため「関知しない」のは不適切です。"
+        },
+        {
+            text: "下請けを含めた施工体制において「役割と責任の明確化」を徹底する目的として最も適切なものはどれか。",
+            options: [
+                "A. 作業ミスが起きた時の責任追及を容易にするため",
+                "B. 安全で効率的な作業を実現し、連携ミスや重複を防止するため",
+                "C. コンプライアンス違反を隠蔽する仕組みづくりのため",
+                "D. 単に書類上の手続きを増やすため"
+            ],
+            correct: "B",
+            explanation: "役割と責任の明確化は、安全・品質・工程の安定した進行とトラブル防止に直結します。"
+        },
+        {
+            text: "現場のチームワーク向上策として、『リーダーシップとフォロワーシップ』の観点から最も効果的な取組みはどれか。",
+            options: [
+                "A. すべての決定を現場監督一人で行い、作業員は従うのみ",
+                "B. 各作業員が指示待ち姿勢をとることを推奨する",
+                "C. 監督はビジョンを示し、作業員も積極的に意見や気づきを述べ合う文化をつくる",
+                "D. 問題発生時は責任の所在を明らかにして叱責することを優先する"
+            ],
+            correct: "C",
+            explanation: "双方向のコミュニケーションと自律的な発言がチームワークを強化し、リーダーとメンバーの相互成長を促します。"
+        },
+        {
+            text: "「施工体制台帳」や「元方安全管理者」に関する説明として正しいものはどれか。",
+            options: [
+                "A. 施工体制台帳は完成後にまとめればよく、作業中は不要である",
+                "B. 元方安全管理者は統括安全責任者として、現場全体の安全衛生を管理調整する役割を持つ",
+                "C. 施工体制台帳には各作業員の趣味や年収を記載する義務がある",
+                "D. 元方安全管理者は現場の職長兼任が義務付けられている"
+            ],
+            correct: "B",
+            explanation: "元方安全管理者は現場での安全衛生管理統括役。施工体制台帳は作業開始前に整備し、安全衛生関係を明示します。"
+        },
+        {
+            text: "職長・作業員間の情報伝達を円滑にする「ツール・ボックスミーティング(TBM)」の主な目的として最も適切なのはどれか。",
+            options: [
+                "A. 長時間労働の記録をつける場",
+                "B. 作業開始前に危険箇所・作業手順・役割を参加者全員で確認し意識統一を図る",
+                "C. 経営層からのお達しを一方的に伝える場",
+                "D. 単なる朝の挨拶だけを行う形式的な集まり"
+            ],
+            correct: "B",
+            explanation: "TBMは少人数グループで危険予知や作業手順を確認し、チームワーク及び安全意識を高める活動です。"
+        },
+        {
+            text: "現場全体の工程調整を行うにあたり、複数業者の「共同作業エリア」の取り決めで欠かせない項目はどれか。",
+            options: [
+                "A. 優先順位は高額な業者が独占する",
+                "B. 作業時間帯・重機運用ルール・入退場ルールを取り決め、全員で守る",
+                "C. 他業者の動線は気にしなくてよい",
+                "D. 現場事務所の鍵の管理者だけ決めておけば十分"
+            ],
+            correct: "B",
+            explanation: "共同作業エリアでは作業順序・時間・安全対策などをルール化し協調することが必須であり、これが施工体制の基盤です。"
+        },
+        {
+            text: "チームワークの阻害要因として一般的に問題となる行動はどれか。",
+            options: [
+                "A. 現場内で不明点があればすぐに職長へ質問する",
+                "B. 自分の施工に自信があっても、他者のアドバイスを聞く姿勢を持つ",
+                "C. 連絡をせずに勝手に作業手順を変更し、周囲に伝えない",
+                "D. 朝礼時に当日の作業リスクを共有する"
+            ],
+            correct: "C",
+            explanation: "無断作業変更は重大な事故や工程遅延を招き、チームワークを著しく損ないます。報告・連絡・相談の原則が重要です。"
+        },
+        {
+            text: "下請業者を含めた「施工体制図」に関する説明として正しいものはどれか。",
+            options: [
+                "A. 施工体制図は作業終了後に行政へ提出するだけで良い",
+                "B. 安全衛生責任者の氏名や役割を明示し、現場の指揮系統を可視化する",
+                "C. 施工体制図には現場で使用する食材のメニューも記載する",
+                "D. 施工体制図は完成したら変更してはいけない"
+            ],
+            correct: "B",
+            explanation: "施工体制図は役割・指揮命令系統の明確化が目的であり、安全衛生管理者等の記載は法令上必須です。"
+        }
+    ];
+
+    // アプリケーションの状態
+    let currentIndex = 0;            // 0起点
+    let userAnswers = new Array(QUESTIONS.length).fill(null);  // 選択肢の文字列(A/B/C/D)を保存
+    let submitted = false;            // 採点済みかどうか
+    let score = 0;
+    let mistakes = [];                // {questionIndex, selectedLetter, correctLetter, explanation, questionText, options}
+
+    // DOM 要素
+    const questionTextEl = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackArea = document.getElementById('feedbackArea');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const scorePanel = document.getElementById('scorePanel');
+    const mistakeAreaWrapper = document.getElementById('mistakeAreaWrapper');
+    const mistakeListDiv = document.getElementById('mistakeList');
+    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+    const qCounterSpan = document.getElementById('qCounter');
+
+    // ヘルパー: 選択肢ボタン再レンダリング
+    function renderCurrentQuestion() {
+        if (!QUESTIONS.length) return;
+        const q = QUESTIONS[currentIndex];
+        questionTextEl.innerText = `Q${currentIndex+1}. ${q.text}`;
+        // 選択肢生成
+        let optsHtml = '';
+        const letters = ['A', 'B', 'C', 'D'];
+        q.options.forEach((opt, idx) => {
+            const letter = letters[idx];
+            const isSelected = (userAnswers[currentIndex] === letter);
+            const selectedClass = isSelected ? 'selected-option' : '';
+            optsHtml += `
+                <div class="opt-btn ${selectedClass}" data-choice="${letter}">
+                    <span class="opt-prefix">${letter}.</span>
+                    <span>${opt}</span>
+                </div>
+            `;
+        });
+        optionsContainer.innerHTML = optsHtml;
+
+        // イベントリスナー再設定
+        document.querySelectorAll('.opt-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (submitted) {
+                    feedbackArea.innerHTML = "⚠️ 既に採点済みです。「新しくテストを開始」したい場合はページをリロードしてください。";
+                    return;
+                }
+                const choice = btn.getAttribute('data-choice');
+                // 現在の問題に回答を保存
+                userAnswers[currentIndex] = choice;
+                // フィードバックは回答時に軽いメッセージだけ（採点前なので解説なし）
+                feedbackArea.innerHTML = `✅ 回答: ${choice} を選択しました。必要に応じて他の問題に進んでください。`;
+                // 選択スタイル更新
+                renderCurrentQuestion(); // リレンダーで選択強調
+            });
+        });
+
+        // カウンター更新
+        qCounterSpan.innerText = `${currentIndex+1} / ${QUESTIONS.length}`;
+        // フィードバックが採点後モードではない場合、メッセージ維持（ただしsubmitted=trueなら違う処理）
+        if(submitted){
+            // 採点済みの場合は表示を変更させないが、再描画時にフィードバックは維持
+            if(feedbackArea.innerHTML.includes("採点済み")===false && mistakes.length>0){
+                // 何もしない明確化
+            } else {
+                // 
+            }
+        }
+    }
+
+    // 採点処理（自動で得点計算＆合格判定＆誤答リスト作成、txt用データ保存）
+    function gradingAndShowResult() {
+        if (submitted) {
+            feedbackArea.innerHTML = "⚠️ すでに採点済みです。再採点するにはページをリロードしてください。";
+            return;
+        }
+        let correctCount = 0;
+        const newMistakes = [];
+        for (let i = 0; i < QUESTIONS.length; i++) {
+            const q = QUESTIONS[i];
+            const userChoice = userAnswers[i];
+            const correctLetter = q.correct;
+            if (userChoice && userChoice === correctLetter) {
+                correctCount++;
+            } else {
+                // 未回答もミス扱い（試験では未回答は不正）
+                newMistakes.push({
+                    questionIndex: i,
+                    selectedLetter: userChoice || "(未回答)",
+                    correctLetter: correctLetter,
+                    explanation: q.explanation,
+                    questionText: q.text,
+                    options: [...q.options]
+                });
+            }
+        }
+        score = correctCount;
+        const total = QUESTIONS.length;
+        const percent = (score / total) * 100;
+        const isPass = percent >= 85;
+        mistakes = newMistakes;
+
+        // スコアパネル表示
+        const passText = isPass ? "✅ 合格判定：合格 (85%以上)" : "❌ 不合格判定：85%未达标、再度学習してください";
+        scorePanel.style.display = "block";
+        scorePanel.innerHTML = `<span class="bold">📊 採点結果: ${score} / ${total} 正解 (${percent.toFixed(1)}%)</span><br>${passText}`;
+        
+        // 間違いエリア表示
+        if (mistakes.length > 0) {
+            mistakeAreaWrapper.style.display = "block";
+            renderMistakeList();
+        } else {
+            mistakeAreaWrapper.style.display = "block";
+            mistakeListDiv.innerHTML = `<div style="padding:12px; background:#e6f7e6; border-radius:24px;">🎉 全問正解です！素晴らしいチームワークと施工体制の理解です。🎉</div>`;
+        }
+        
+        submitted = true;
+        // フィードバック更新
+        feedbackArea.innerHTML = `採点完了しました。${isPass ? '合格おめでとうございます。' : '復習を推奨します。'} 誤答リストを確認し、理解を深めてください。`;
+        // 現在の問題表示の選択肢はクリックできなくなる(ガード)
+        renderCurrentQuestion(); // 再レンダリングするがopt-btnのイベントでsubmittedにより選べなくする
+    }
+
+    // 誤答リスト表示 (A/B/C/D内容 + 正答 + 解説 を含む)
+    function renderMistakeList() {
+        if (!mistakeListDiv) return;
+        if (mistakes.length === 0) return;
+        let html = '';
+        mistakes.forEach((mist, idx) => {
+            const qNumber = mist.questionIndex + 1;
+            const selected = mist.selectedLetter;
+            const correctAnsLetter = mist.correctLetter;
+            // 選択肢の内容を取得
+            const lettersMap = { A:0, B:1, C:2, D:3 };
+            let selectedText = "";
+            let correctText = "";
+            if (mist.options && mist.options.length) {
+                if (selected !== "(未回答)" && lettersMap[selected] !== undefined) {
+                    selectedText = mist.options[lettersMap[selected]];
+                } else if (selected !== "(未回答)") {
+                    selectedText = "(選択肢内容不明)";
+                } else {
+                    selectedText = "【未選択】";
+                }
+                if (lettersMap[correctAnsLetter] !== undefined) {
+                    correctText = mist.options[lettersMap[correctAnsLetter]];
+                } else {
+                    correctText = "正答内容取得不可";
+                }
+            } else {
+                selectedText = "選択肢データなし";
+                correctText = "正答なし";
+            }
+            html += `
+                <div class="mistake-item">
+                    <div><strong>問${qNumber}: ${mist.questionText}</strong></div>
+                    <div>📌 <span class="mistake-letter">あなたの選択: ${selected}</span> → ${selectedText}</div>
+                    <div>✅ <span class="correct-ans">正答: ${correctAnsLetter}</span> → ${correctText}</div>
+                    <div>📖 解説: ${mist.explanation}</div>
+                </div>
+            `;
+        });
+        mistakeListDiv.innerHTML = html;
+    }
+
+    // txtダウンロード: 要件「間違いがあった場合にA/B/C/Dの内容+正答+解説を保存 ファイル名は元のドキュメント名と同じ」
+    // 元のドキュメント名: このHTMLファイルのタイトル類似だが、「JAC模擬試験_施工体制_誤答履歴.txt」と要件を満たすため固定名＋同じ名前に?
+    // 要件: "txt文档名称和原文档名称相同" => 原文档名称とはこのhtml名？ブラウザでは取得不可だが、仮に「jac_siken_result.txt」とする。
+    // しかし実装上、ユーザーが保存時にデフォルト名を「Jac施工体制模試_誤答リスト.txt」とする。要件に沿って同じにするために、現在のページタイトルを利用。
+    function downloadMistakesAsTxt() {
+        if (!submitted) {
+            alert("先に採点を行ってから誤答テキストを保存してください。");
+            return;
+        }
+        if (mistakes.length === 0) {
+            alert("全て正解のため、誤答リストは空です。テキストは生成しません。");
+            return;
+        }
+        let content = "";
+        content += "【JAC 建築分野 特定技能2号 模擬試験】 誤答記録\n";
+        content += `試験区分: 第1分野 施工体制・チームワーク\n`;
+        content += `生成日時: ${new Date().toLocaleString()}\n`;
+        content += `正答率: ${((score/QUESTIONS.length)*100).toFixed(1)}% (${score}/${QUESTIONS.length})\n`;
+        content += `------------------------------------------------------------\n\n`;
+        
+        mistakes.forEach((mist, idx) => {
+            const qNumber = mist.questionIndex + 1;
+            const selectedLetter = mist.selectedLetter;
+            const correctLetter = mist.correctLetter;
+            const optArr = mist.options;
+            const letters = ['A','B','C','D'];
+            let selectedFull = "";
+            let correctFull = "";
+            if (optArr && optArr.length) {
+                const selIdx = letters.indexOf(selectedLetter);
+                const corIdx = letters.indexOf(correctLetter);
+                selectedFull = (selIdx !== -1 && selectedLetter !== "(未回答)") ? optArr[selIdx] : (selectedLetter === "(未回答)" ? "未回答" : selectedLetter);
+                correctFull = (corIdx !== -1) ? optArr[corIdx] : correctLetter;
+            } else {
+                selectedFull = selectedLetter;
+                correctFull = correctLetter;
+            }
+            content += `問${qNumber}: ${mist.questionText}\n`;
+            content += `【選択肢内容】\n`;
+            if(optArr){
+                content += `A: ${optArr[0]}\nB: ${optArr[1]}\nC: ${optArr[2]}\nD: ${optArr[3]}\n`;
+            }
+            content += `あなたの解答: ${selectedLetter} → ${selectedFull}\n`;
+            content += `正答: ${correctLetter} → ${correctFull}\n`;
+            content += `解説: ${mist.explanation}\n`;
+            content += `------------------------------------------------------------\n\n`;
+        });
+        // ファイル名: 原文档名称相同 => このHTMLファイルと同じ名前を仮想的に付与します。jac_siken.html であれば .txt 拡張子変換
+        // window.location.pathname から取得。簡便のため「jac_siken_施工体制_誤答.txt」ではなく要件忠実に "jac_siken_result.txt"
+        let fileName = "jac_shikoutai_seido_mistakes.txt";
+        // 可能であれば現在のhtmlファイル名を取得して拡張子を.txtに
+        const path = window.location.pathname;
+        const baseName = path.substring(path.lastIndexOf('/')+1).replace(/\.html?$/i, '');
+        if (baseName && baseName !== "") {
+            fileName = `${baseName}_mistakes.txt`;
+        } else {
+            fileName = "JAC_分野1_誤答リスト.txt";
+        }
+        const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    // ナビゲーション
+    function goPrev() {
+        if (submitted) {
+            feedbackArea.innerHTML = "採点済みです。問題の移動はできますが回答変更はできません。";
+            // 移動は許可するが、採点済みフラグによる選択不可は維持
+        }
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCurrentQuestion();
+        } else {
+            feedbackArea.innerHTML = "最初の問題です。";
+        }
+    }
+    function goNext() {
+        if (submitted) {
+            feedbackArea.innerHTML = "採点済みです（回答変更はできません）。";
+        }
+        if (currentIndex < QUESTIONS.length - 1) {
+            currentIndex++;
+            renderCurrentQuestion();
+        } else {
+            feedbackArea.innerHTML = "最後の問題です。「採点＆結果表示」を押して判定を受けてください。";
+        }
+    }
+
+    // 初期化とイベント
+    function init() {
+        renderCurrentQuestion();
+        prevBtn.addEventListener('click', goPrev);
+        nextBtn.addEventListener('click', goNext);
+        submitBtn.addEventListener('click', gradingAndShowResult);
+        downloadTxtBtn.addEventListener('click', downloadMistakesAsTxt);
+        // 未採点状態で初期フィードバック
+        feedbackArea.innerHTML = "各問題の選択肢をクリックして解答を選んでください。全て選択後、採点ボタンを押してください。";
+        submitted = false;
+        scorePanel.style.display = "none";
+        mistakeAreaWrapper.style.display = "none";
+    }
+    init();
+</script>
+</body>
+</html>
